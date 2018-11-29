@@ -1,11 +1,17 @@
 import cv2
 import numpy as np
+import pyttsx3
+import os
+import sys
+
+engine = pyttsx3.init()
 
 min_threshold = 10  # these values are used to filter our detector.
 max_threshold = 200  # they can be tweaked depending on the camera distance, camera angle, ...
 min_area = 100  # ... focus, brightness, etc.
 min_circularity = .3
 min_inertia_ratio = .5
+
 
 cap = cv2.VideoCapture(0)  # '0' is the webcam's ID. usually it is 0 or 1. 'cap' is the video object.
 cap.set(15, -4)  # '15' references video's brightness. '-4' sets the brightness.
@@ -53,6 +59,8 @@ while True:
         # if the most recent valid reading has changed, and it's something other than zero, then print it.
         if display[-1] != display[-2] and display[-1] != 0:
             msg = str(display[-1]) + "\n****"
+            engine.say(str(display[-1]))
+            engine.runAndWait()
             print(msg)
 
     counter += 1
